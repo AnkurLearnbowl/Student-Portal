@@ -1,0 +1,13 @@
+.App{
+  position: relative;
+  max-width: 2000px;
+  margin: auto;
+}
+:root{
+  --primary-color: #2d3092;
+  --primary-text-color: black;
+  --secondary-text-color: #787878;;
+}
+
+
+

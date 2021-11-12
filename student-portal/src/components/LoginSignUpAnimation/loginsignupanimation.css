@@ -1,0 +1,120 @@
+/* Waves Css */
+.login-animation{
+    margin: 0px;
+}
+.waves-container{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
+.login-waves{
+    height: auto;
+    object-fit: cover;
+}
+.login-waves-after-submit
+{
+    animation: down 5s forwards;
+}
+
+/* Rocket Css */
+.rocket-container{
+    position: absolute;
+    width: 25%;
+    max-width: 200px;
+    top: calc(100% - 40%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+.login-rocket{
+    animation: bounce 3s infinite;
+}
+.login-rocket-fly{
+    animation: fly 5s forwards;
+}
+
+/* Planets Css */
+.planets-container{
+    position: absolute;
+    top: -180px;
+    left: 0px;
+    z-index: 0;
+}
+.planets-after-submit{
+    animation: down 5s forwards;
+}
+.planets{
+    width: 100%;
+}
+.exhaust-fumes{
+    width: fit-content;
+    margin: auto;
+    list-style: none; 
+    bottom: 0px;
+}
+.flame-1{
+    position: absolute;
+    width: 30px;
+    height: 110px;
+    left: 50%;
+    top: calc(100% - 10%);
+    transform: translate(-51%, -50%);
+    background: linear-gradient(to bottom, transparent 5%, orange 100%);
+    animation: fly 5s forwards;
+}
+
+/* Animations */
+@keyframes down{
+    to{
+        transform: translate(0px, 500px);
+    }
+}
+
+@keyframes fly{
+    to{
+      transform: translate(0px, -110vh);
+    }
+  }
+  
+@keyframes bounce {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-31px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes fumes {
+    0% {
+        transform: scale(1);
+        background-color: white;
+    }
+    25% {
+        transform: scale(1.2);
+        background-color: white;
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.5);
+        background-color: white;
+        opacity: 0.7;
+    }
+    70% {
+        transform: scale(2);
+        opacity: 0.5;
+    }
+    90% {
+        /* background-color: white; */
+        transform: scale(2.5);
+        opacity: 0.4;
+    }
+    100% {
+        background-color: transparent;
+        transform: scale(1)
+    }
+}

@@ -1,0 +1,262 @@
+.signup{
+    position: relative;
+    display: grid;
+    max-width: 1440px;
+    grid-template-columns: 50% 50%;
+    /* height: 1110px; */
+    margin: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.signup-section-1{
+    position: relative;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    width: 100%;
+    height: 100vh;
+    max-height: 1200px;
+    background: linear-gradient(180deg, #2D3092 -4.69%, #3D40B6 53.89%, #4247CE 109.38%);
+    border-radius: 30px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+.signup-section-2{
+    flex-direction: column;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    width: 100%;
+    height: 100vh;
+    /* max-width: 700px; */
+    max-height: 1200px;
+    background-color: transparent;
+    margin-left: 60px;
+    overflow-y: scroll;
+}
+/* .login-section-2-content{
+    width: fit-content;
+    margin: auto;
+} */
+
+/* Waves Css */
+/* .waves-container{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
+.login-waves{
+    height: auto;
+    object-fit: cover;
+}
+.login-waves-after-submit
+{
+    animation: down 5s forwards;
+} */
+
+/* Rocket Css */
+/* .rocket-container{
+    position: absolute;
+    width: 25%;
+    max-width: 200px;
+    top: calc(100% - 40%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+.login-rocket{
+    animation: bounce 3s infinite;
+}
+.login-rocket-fly{
+    animation: fly 5s forwards;
+} */
+
+/* Planets Css */
+/* .planets-container{
+    position: absolute;
+    top: -180px;
+    left: 0px;
+    z-index: 0;
+}
+.planets-after-submit{
+    animation: down 5s forwards;
+}
+.planets{
+    width: 100%;
+}
+.exhaust-fumes{
+    width: fit-content;
+    margin: auto;
+    list-style: none; 
+    bottom: 0px;
+}
+.flame-1{
+    position: absolute;
+    width: 30px;
+    height: 110px;
+    left: 50%;
+    top: calc(100% - 10%);
+    transform: translate(-51%, -50%);
+    background: linear-gradient(to bottom, transparent 5%, orange 100%);
+    animation: fly 5s forwards;
+} */
+/* Login Section 2 */
+.signup-learnbowl-icon{
+    width: 215px;
+    height: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.signup-page-back-btn{
+    border: none;
+    text-decoration: underline;
+    background: transparent;
+    font-size: 18px;
+    margin-bottom: 0px;
+}
+.signup-page-sign-up-text{
+    font-size: 50px;
+    font-weight: 500;
+    color: black;
+    margin-top: 45px;
+    margin-bottom: 15px;
+}
+.signup-page-sign-up-text-sub-heading{
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--secondary-text-color);
+    margin-bottom: 30px;
+    margin-right: 20px;
+}
+/* SignUp Form Css */
+.signup-form{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 500px;
+    margin-bottom: 40px;
+}
+.login-sign-up-label{
+    color: var(--primary-text-color );
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.login-sign-up-input-box{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.login-sign-up-input{
+    height: 45px;
+    font-size: 18px;
+    background: #FFFFFF;
+    border: 1px solid #B0B0B0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-bottom: 25px;
+}
+.eye-icon{
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.login-sign-up-input-txt{
+    position: absolute;
+    right: 10px;
+    top: 36px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #727272;
+    font-weight: 500;
+}
+.sign-up-btn{
+    background-color: var(--primary-color);
+    width: 195px;
+    height: 60px;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.sign-up-btn-disabled{
+    background-color: var(--primary-color);
+    width: 195px;
+    height: 60px;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.5;
+}
+.sign-up-btn:hover{
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+.signup-info-text{
+    color: var(--secondary-text-color);
+    font-weight: 400;
+    font-size: 18px;
+}
+/*  */
+/*  */
+/* Animations */
+/* @keyframes down{
+    to{
+        transform: translate(0px, 500px);
+    }
+}
+
+@keyframes fly{
+    to{
+      transform: translate(0px, -110vh);
+    }
+  }
+  
+@keyframes bounce {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-31px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes fumes {
+    0% {
+        transform: scale(1);
+        background-color: white;
+    }
+    25% {
+        transform: scale(1.2);
+        background-color: white;
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.5);
+        background-color: white;
+        opacity: 0.7;
+    }
+    70% {
+        transform: scale(2);
+        opacity: 0.5;
+    }
+    90% {
+        
+        transform: scale(2.5);
+        opacity: 0.4;
+    }
+    100% {
+        background-color: transparent;
+        transform: scale(1)
+    }
+} */

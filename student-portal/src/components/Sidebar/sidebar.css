@@ -1,0 +1,116 @@
+.sidebar{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    width: 348px;
+    /* height: 99vh; */
+    min-height: 850px;
+    background-color:var(--primary-color);
+    border-radius: 10px;
+}
+.sidebar-learnbowl-icon-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+.sidebar-learnbowl-icon{
+    width: 41px;
+    height: 41px;
+}
+.sidebar-learnbowl-text-container{
+    color: white;
+    font-weight: 700;
+    font-size: 28px;
+    margin-left: 8px;
+}
+.sidebar-learnbowl-icon-container{
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-learnbowl-icon{
+    width: 40px;
+}
+
+/* Section2 Css Start */
+.sidebar-section-2{
+    margin-top: 90px;
+}
+.sidebar-section-2-point-container{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    cursor: pointer;
+    width: 300px;
+    height: 72px;
+    margin-bottom: 40px;
+    margin-left: 70px;
+    color: white;
+}
+.sidebar-section-2-point-container-active{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 300px;
+    height: 72px;
+    margin-bottom: 40px;
+    background-color: white;
+    color: black;
+    border-radius: 0px 25px 25px 0px;
+}
+.sidebar-section-2-point-text-container{
+    font-size: 24px;
+    font-weight: 500;
+    margin-left: 24px;
+}
+.sidebar-section-2-icon{
+    width: 32px;
+    height: 32px;
+}
+
+/* Section 3 Css Start */
+.sidebar-section-3{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 220px;
+    background: #26276A;
+    border-radius: 0px 0px 30px 30px;
+}
+.sidebar-section-3-icon-container{
+    display: flex;
+    margin-top: 35px;
+}
+.sidebar-section-3-icon-1{
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    margin-left: 70px;
+    cursor: pointer;
+}
+.sidebar-section-3-icon-2{
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    margin-left: 30px;
+    cursor: pointer;
+}
+.sidebar-section-3-text{
+    margin-top: 30px;
+    position: relative;
+    margin-left: 70px;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    width: fit-content;
+    cursor: pointer;
+}
+.sidebar-section-3-text-icon{
+    position: absolute;
+    right: -40px;
+    font-size: 30px;
+}
