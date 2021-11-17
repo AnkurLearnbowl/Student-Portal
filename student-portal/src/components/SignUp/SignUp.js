@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from "react-router-dom";
 import Axios from "../../axios";
-import axios from "axios";
+import { encrypt } from "unixcrypt";
 
 toast.configure();
 function SignUp() {
@@ -25,12 +25,14 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [otp, setOtp] = useState("");
+  const [otpText, setOtpText] = useState("Get Otp");
   const [isotpVerified, setOtpVerified] = useState(false);
   const [isNameValid, setNameValid] = useState(false);
   const [isContactNumberValild, setContactNumberValid] = useState(false);
-  const [isEmailValid, setEmailValid] = useState(true);
+  const [isEmailValid, setEmailValid] = useState(false);
   const [isPasswordValid, setPasswordValid] = useState(false);
   const [isConfirmPasswordValid, setConfirmPasswordValid] = useState(false);
+  const [isOtpValid, setOtpValid] = useState(false);
   const [authToken, setAuthToken] = useState("");
   const nameInputRef = useRef();
   const contactInputRef = useRef();
@@ -59,14 +61,40 @@ function SignUp() {
 
   //Defining the notification
   const passwordInfo = () => {
+    toast.info("Password length should be greater than 6", {
+      position: toast.POSITION.BOTTOM_CENTER,
+      theme: "dark",
+      pauseOnHover: false,
+    });
+  };
+
+  //Defining the notification
+  const invalidContactNumber = () => {
+    toast.info("Mobile Number Must be of length 10", {
+      position: toast.POSITION.BOTTOM_CENTER,
+      theme: "dark",
+      pauseOnHover: false,
+    });
+  };
+
+  //Defining the notification
+  const invalidName = () => {
     toast.info(
-      "Password Must Contain an Uppercase, LowerCase, Number, Special Character and length should be greater than 6",
+      "Name Must be combination of only uppercase and lowecase letters",
       {
         position: toast.POSITION.BOTTOM_CENTER,
         theme: "dark",
         pauseOnHover: false,
       }
     );
+  };
+  //Defining the notification
+  const invalidEmail = () => {
+    toast.info("Please enter a valid Email", {
+      position: toast.POSITION.BOTTOM_CENTER,
+      theme: "dark",
+      pauseOnHover: false,
+    });
   };
   //Defining the notification
   const otpSent = () => {
@@ -99,7 +127,21 @@ function SignUp() {
     });
   };
   const alreadyRegistered = () => {
-    toast.info("You are already registered, Please Sign In", {
+    toast.info("Please choose a differnt email or contact number", {
+      position: toast.POSITION.BOTTOM_CENTER,
+      theme: "dark",
+      pauseOnHover: false,
+    });
+  };
+  const wait10Seconds = () => {
+    toast.info("You must wait for 10 seconds before clicking resend otp", {
+      position: toast.POSITION.BOTTOM_CENTER,
+      theme: "dark",
+      pauseOnHover: false,
+    });
+  };
+  const somethingWentWrong = () => {
+    toast.error("Something Went Wrong, Please try again later", {
       position: toast.POSITION.BOTTOM_CENTER,
       theme: "dark",
       pauseOnHover: false,
@@ -145,9 +187,10 @@ function SignUp() {
     let result = pattern.test(e.target.value);
     if (result === false) {
       emailInputRef.current.style.border = "2px solid red";
+      setEmailValid(false);
     } else {
       emailInputRef.current.style.border = "1px solid #BCBCBC";
-      //setEmailValid(true);
+      setEmailValid(true);
     }
   }
 
@@ -156,6 +199,10 @@ function SignUp() {
     setPassword(e.target.value);
     if (parseInt(e.target.value.length) >= 6) {
       setPasswordValid(true);
+      if (e.target.value === confirmPassword) {
+        confirmPasswordInputRef.current.style.border = "1px solid #BCBCBC";
+        setConfirmPasswordValid(true);
+      }
       passwordInputRef.current.style.border = "1px solid #BCBCBC";
     } else {
       setPasswordValid(false);
@@ -168,6 +215,10 @@ function SignUp() {
     // console.log(password === e.target.value);
     if (password === e.target.value) {
       confirmPasswordInputRef.current.style.border = "1px solid #BCBCBC";
+      if (e.target.value === password && password.length >= 6) {
+        passwordInputRef.current.style.border = "1px solid #BCBCBC";
+        setPasswordValid(true);
+      }
       setConfirmPasswordValid(true);
     } else {
       confirmPasswordInputRef.current.style.border = "2px solid red";
@@ -180,8 +231,11 @@ function SignUp() {
     //console.log(e.target.value.length);
     if (parseInt(e.target.value.length) === parseInt(4)) {
       verifyOtpRef.current.style.color = "green";
+      setOtpValid(true);
+      // setOtpva
     } else {
       verifyOtpRef.current.style.color = "#727272";
+      setOtpValid(false);
     }
   }
 
@@ -189,6 +243,12 @@ function SignUp() {
     history.push("/login");
   }
   async function createUser() {
+    //Encrypting the Password
+    // $5 for sha256 || $6 for sha 512
+    //$hrwashere is the salt
+    let hashedPassword = encrypt(password, "$5$rounds=10000$hrwashere");
+    hashedPassword = hashedPassword.substring(26, hashedPassword.length);
+    // console.log(hashedPassword);
     Axios.post(
       "/v1/signup",
       {
@@ -196,8 +256,8 @@ function SignUp() {
           email: email,
           name: name,
           contactNumber: contactNumber,
-          password: password,
-          password_confirmation: confirmPassword,
+          password: hashedPassword,
+          password_confirmation: hashedPassword,
         },
       },
       {
@@ -216,12 +276,16 @@ function SignUp() {
           //User Already exists please Log in
           alreadyRegistered();
         }
-        // console.log(statusCode);
       })
       .catch((err) => {
-        console.log(err.message);
-        if (err.response.status === 401) {
-          wrongPassword();
+        console.log(err.response);
+        let statusCode = err.response.data.statuscode;
+        if (statusCode === "SC102") {
+          alreadyRegistered();
+        } else if (statusCode === "SC103") {
+          alreadyRegistered();
+        } else if (statusCode === "SC104") {
+          alreadyRegistered();
         }
       });
   }
@@ -229,18 +293,31 @@ function SignUp() {
     //Function to display message that otp is sent
     if (authToken !== "") {
       console.log("inside get otp");
-      Axios.get("/v1/verifyotp", {
-        headers: {
-          Authorization: authToken,
-        },
-      })
-        .then((response) => {
-          console.log(response);
-          otpSent();
+      if (isContactNumberValild) {
+        Axios.get("/v1/verifyotp", {
+          headers: {
+            Authorization: authToken,
+          },
         })
-        .catch((err) => {
-          console.log(err);
-        });
+          .then((response) => {
+            console.log(response);
+            otpSent();
+            setOtpText("Resend Otp");
+            setContactNumberValid(false);
+            getOtpRef.current.style.color = "#727272";
+            setTimeout(() => {
+              getOtpRef.current.style.color = "green";
+              setContactNumberValid(true);
+            }, 10000);
+          })
+          .catch((err) => {
+            console.log(err.response);
+            let statusCode = err.response.data.statuscode;
+            if (statusCode === "SC202") {
+              somethingWentWrong();
+            }
+          });
+      }
     } else {
       checkForm();
     }
@@ -263,19 +340,31 @@ function SignUp() {
           let tempStatusCode = response.data.statuscode;
           console.log(response.data);
           if (tempStatusCode === "SC301") {
+            //Otp Verified
             setOtpVerified(true);
             otpVerified();
             console.log("Signed Up Succesfully");
             setFormSubmitted(true);
+            setTimeout(() => {
+              history.push("/login");
+            }, 4000);
           } else if (tempStatusCode === "SC302") {
+            //Wrong Otp Entered
             setOtpVerified(false);
             otpNotVerified();
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err.response);
+          let statusCode = err.response.data.statuscode;
+          if (statusCode === "SC302") {
+            //Wrong Otp Entered
+            setOtpVerified(false);
+            otpNotVerified();
+          }
         });
     } else {
+      //Please Enter the correct Otp
       otpLength();
     }
   }
@@ -288,15 +377,25 @@ function SignUp() {
       isContactNumberValild &&
       isEmailValid &&
       isPasswordValid &&
-      isConfirmPasswordValid
+      isConfirmPasswordValid &&
+      password === confirmPassword
     ) {
       isFormValid = true;
     } else {
       if (!isPasswordValid) {
         passwordInfo();
       }
-      if (!isConfirmPasswordValid) {
+      if (!(password === confirmPassword)) {
         passwordsNotMatching();
+      }
+      if (!isContactNumberValild) {
+        invalidContactNumber();
+      }
+      if (!isNameValid) {
+        invalidName();
+      }
+      if (!isEmailValid) {
+        invalidEmail();
       }
     }
     if (isFormValid) {
@@ -322,6 +421,7 @@ function SignUp() {
               data="/images/learnbowl-blue.svg"
               type="image/svg+xml"
               className="signup-learnbowl-icon"
+              aria-labelledby="learnbowl-icon"
             ></object>
           </div>
           <button className="signup-page-back-btn">Back</button>
@@ -423,10 +523,14 @@ function SignUp() {
               ></input>
               <p
                 className="login-sign-up-input-txt"
-                onClick={() => getOtp()}
+                onClick={
+                  isContactNumberValild === true
+                    ? () => getOtp()
+                    : () => wait10Seconds()
+                }
                 ref={getOtpRef}
               >
-                Get Otp
+                {otpText}
               </p>
             </div>
 

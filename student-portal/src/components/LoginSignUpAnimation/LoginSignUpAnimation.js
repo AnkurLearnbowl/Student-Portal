@@ -10,6 +10,7 @@ function LoginSignUpAnimation(prop) {
           data="/images/waves.svg"
           type="image/svg+xml"
           className={isClicked ? "login-waves-after-submit" : "login-waves"}
+          aria-labelledby="waves"
         ></object>
       </div>
 
@@ -19,15 +20,17 @@ function LoginSignUpAnimation(prop) {
           data="/images/rocket.svg"
           type="image/svg+xml"
           className={isClicked ? "login-rocket-fly" : "login-rocket"}
+          aria-labelledby="rocket"
         ></object>
       </div>
 
       <div className="planets-container">
         <object
           alt="planets"
-          data="/images/login-page-waves.svg"
+          data="/images/planets.svg"
           type="image/svg+xml"
           className={isClicked ? "planets-after-submit" : "planets"}
+          aria-labelledby="planets"
         ></object>
       </div>
       <ul className="exhaust-fumes">

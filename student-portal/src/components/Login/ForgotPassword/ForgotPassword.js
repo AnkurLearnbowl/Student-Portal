@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import LoginSignUpAnimation from "../../LoginSignUpAnimation/LoginSignUpAnimation";
 import "./forgotpassword.css";
 import { AiFillEye } from "react-icons/ai";
@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Axios from "../../../axios";
+import { encrypt } from "unixcrypt";
 toast.configure();
 
 function ForgotPassword() {
@@ -32,7 +33,7 @@ function ForgotPassword() {
   const [isOtpValid, setOtpValid] = useState(false);
   const [btnText, setBtnText] = useState("Send Otp");
   const contactInputRef = useRef();
-  const passwordInputRef = useRef();
+  // const passwordInputRef = useRef();
 
   //Defining the notification
   const otpSent = () => {
@@ -203,11 +204,14 @@ function ForgotPassword() {
     //Function to display message that otp is sent
     console.log("inside change Password");
     if (confirmPassword === password && password.length > 5) {
+      let hashedPassword = encrypt(password, "$5$rounds=10000$hrwashere");
+      hashedPassword = hashedPassword.substring(26, hashedPassword.length);
+      console.log(hashedPassword);
       Axios.post(
         "/v1/forgot_password_update",
         {
           contactNumber: contactNumber,
-          newpassword: password,
+          newpassword: hashedPassword,
         },
         {
           headers: headers,
@@ -278,9 +282,15 @@ function ForgotPassword() {
               data="/images/learnbowl-blue.svg"
               type="image/svg+xml"
               className="signup-learnbowl-icon"
+              aria-labelledby="learnbowl-icon"
             ></object>
           </div>
-          <button className="forgot-password-page-back-btn">Back</button>
+          <button
+            className="forgot-password-page-back-btn"
+            onClick={() => history.goBack()}
+          >
+            Back
+          </button>
           <h4 className="forgot-password-page-sign-up-text">
             Forgot Password!!!
           </h4>

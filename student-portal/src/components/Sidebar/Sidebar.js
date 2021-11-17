@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./sidebar.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
@@ -8,16 +8,28 @@ import { CgArrowLongRight } from "react-icons/cg";
 
 function Sidebar() {
   const [itemClickedNumber, setItemClickedNumber] = useState(1);
+  const history = useHistory();
+  const location = useLocation();
 
+  useEffect(() => {
+    //console.log(location.pathname + "Ankur")
+    if (location.pathname === "/home") {
+      setItemClickedNumber(1);
+    } else if (location.pathname === "/myprofile") {
+      setItemClickedNumber(4);
+    }
+  }, [location.pathname]);
   function handleClick(number) {
     if (number === 1) {
       setItemClickedNumber(1);
+      history.push("/home");
     } else if (number === 2) {
       setItemClickedNumber(2);
     } else if (number === 3) {
       setItemClickedNumber(3);
     } else if (number === 4) {
       setItemClickedNumber(4);
+      history.push("/myprofile");
     }
   }
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import LoginSignUpAnimation from "../LoginSignUpAnimation/LoginSignUpAnimation";
 import "./login.css";
 import { AiFillEye } from "react-icons/ai";
@@ -7,8 +7,11 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Axios from "../../axios";
+import { encrypt } from "unixcrypt";
+import { useStateValue } from "../../StateProvider";
 toast.configure();
 function Login() {
+  const [state, dispatch] = useStateValue();
   const headers = {
     "Content-Type": "application/json",
   };
@@ -18,32 +21,35 @@ function Login() {
   const [isPasswordValid, setPasswordValid] = useState(false);
   const [contactNumber, setContactNumber] = useState("");
   const [isContactNumberValild, setContactNumberValid] = useState(false);
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const contactInputRef = useRef();
-  const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
   //Defining the notification
   const passwordInfo = () => {
-    toast.info(
-      "Password Must Contain an Uppercase, LowerCase, Number, Special Character and length should be greater than 6",
-      {
-        position: toast.POSITION.BOTTOM_CENTER,
-        theme: "dark",
-        pauseOnHover: false,
-      }
-    );
+    toast.info("Password must be of length 6", {
+      position: toast.POSITION.BOTTOM_CENTER,
+      theme: "dark",
+      pauseOnHover: false,
+    });
   };
   //Defining the notification
   const wrongPassword = () => {
-    toast.error("Wrong Password", {
+    toast.error("Wrong Username or Password", {
       position: toast.POSITION.BOTTOM_CENTER,
       theme: "dark",
       pauseOnHover: false,
     });
   };
 
+  //Defining the notification
+  const mobileNumberLength = () => {
+    toast.info("Number Must be of length 10", {
+      position: toast.POSITION.BOTTOM_CENTER,
+      theme: "dark",
+      pauseOnHover: false,
+    });
+  };
   //Defining the notification
   const signUpFirst = () => {
     toast.error("You are not registered, Please Sign Up First", {
@@ -78,16 +84,22 @@ function Login() {
   function onClickSignUp() {
     history.push("/signup");
   }
+  function onClickForgotPassword() {
+    history.push("/forgotpassword");
+  }
   function handleFormSubmit(e) {
     e.preventDefault();
-    let isFormValid = false;
 
+    // console.log("asda");
     if (isPasswordValid && isContactNumberValild) {
+      let hashedPassword = encrypt(password, "$5$rounds=10000$hrwashere");
+      hashedPassword = hashedPassword.substring(26, hashedPassword.length);
+      //console.log(hashedPassword);
       Axios.post(
         "/v1/auth_user",
         {
           contactNumber: contactNumber,
-          password: password,
+          password: hashedPassword,
         },
         {
           headers: headers,
@@ -96,25 +108,75 @@ function Login() {
         .then((response) => {
           console.log(response);
           let statusCode = response.data.statuscode;
+          let user = response.data?.user;
+          let batch = response.data?.batch;
+          let isUserRegistered = response.data?.isRegisteredUser;
+          let authToken = response.data?.auth_token;
+
+          //Setting the information in the app so that it could be accesed universally
+          dispatch({
+            type: "SET_USER",
+            isUserLoggedIn: true,
+            user: user,
+            batch: batch,
+            isUserRegistered: isUserRegistered,
+            authToken: authToken,
+          });
+
+          //Setting in session
+          sessionStorage.setItem("user", JSON.stringify(user));
+          sessionStorage.setItem("batch", JSON.stringify(batch));
+          sessionStorage.setItem("auth_token", authToken);
+          sessionStorage.setItem("isUserLoggedIn", true);
+          // localStorage.setItem("user", JSON.stringify(user));
           if (statusCode === "SC403") {
             //otp Not verified so sign in first
             signUpFirst();
           } else if (statusCode === "SC404") {
-            //Wrong Password
+            //Invalid Username or password
             wrongPassword();
-          } else {
+          } else if (statusCode === "SC401") {
+            //Login SUCCESS and Batch is assigned
             setFormSubmitted(true);
+            setTimeout(() => {
+              history.push("/home");
+            }, 4000);
+          } else if (statusCode === "SC402") {
+            //Login SUCCESS but Batch is not assigned
+            setFormSubmitted(true);
+            setTimeout(() => {
+              history.push("/home");
+            }, 4000);
+          } else if (statusCode === "SC405") {
+            //Login SUCCESS but no data in registration details
+            setFormSubmitted(true);
+            setTimeout(() => {
+              history.push("/home");
+            }, 4000);
+          } else if (statusCode === "SC406") {
+            //Login SUCCESS and workshopPayment paid
+            setFormSubmitted(true);
+            setTimeout(() => {
+              history.push("/home");
+            }, 4000);
           }
         })
         .catch((err) => {
-          console.log(err.message);
-          if (err.response.status === 401) {
-            signUpFirst();
+          console.log(err.response);
+          let statusCode = err.response.data.statuscode;
+          if (statusCode === "SC403") {
+          }
+          if (statusCode === "SC404") {
+            //Invalid Username or password
+            wrongPassword();
           }
         });
     } else {
       if (!isPasswordValid) {
         passwordInfo();
+      }
+      if (!isContactNumberValild) {
+        mobileNumberLength();
       }
     }
   }
@@ -131,9 +193,15 @@ function Login() {
               data="/images/learnbowl-blue.svg"
               type="image/svg+xml"
               className="signup-learnbowl-icon"
+              aria-labelledby="learnbowl-icon"
             ></object>
           </div>
-          <button className="login-page-back-btn">Back</button>
+          <button
+            className="login-page-back-btn"
+            onClick={() => history.goBack()}
+          >
+            Back
+          </button>
           <h4 className="login-page-sign-up-text">Log In</h4>
           <p className="login-page-sign-up-text-sub-heading">
             Great to see you again! Hop on the adventure and
@@ -189,6 +257,7 @@ function Login() {
                     fontWeight: "500",
                     cursor: "pointer",
                   }}
+                  onClick={() => onClickForgotPassword()}
                 >
                   Click Here
                 </span>

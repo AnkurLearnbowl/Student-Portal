@@ -1,0 +1,226 @@
+.my-profile-container{
+    display: grid;
+    grid-template-columns: 348px auto;
+    /* max-width: 1800px;
+    margin: auto; */
+}
+.my-profile{
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    margin-top: 20px;
+    padding-bottom: 90px;
+    margin-left: 60px;
+}
+.my-profile-row-1{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+.my-profile-row-2{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+.my-profile-row-1-col-1{
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.my-profile-row-1-col-2{
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+/* Row-1 Card Css Start*/
+
+/* Row-1 Col-1 Card Css Start */
+.my-profile-row-1-col-1-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    height: 450px;
+    background: #FFFFFF;
+    border-radius: 25px;
+}
+.my-profile-row-1-col-1-card-avatar-container{
+    margin-top: 30px;
+}
+.my-profile-row-1-col-1-card-avatar{
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+.my-profile-row-1-col-1-card-student-name{
+    color: black;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 28px;
+}
+.my-profile-row-1-col-1-card-student-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.my-profile-row-1-col-1-card-student-icon{
+    color: #7d7d7d;
+    margin-right: 5px;
+}
+.my-profile-row-1-col-1-card-student-info-text{
+    font-size: 16px;
+    font-weight: 400;
+    color: #7d7d7d;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.my-profile-row-1-col-1-card-button-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.my-profile-row-1-col-1-card-button-1{
+    border: 2px solid var(--primary-color);
+    width: 230px;
+    height: 45px;
+    border-radius: 10px;
+    color: var(--primary-color);
+    background-color: transparent;
+    margin-top: 18px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.my-profile-row-1-col-1-card-button-2{
+    width: 230px;
+    height: 45px;
+    border-radius: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.my-profile-row-1-col-1-card-button-1:hover{
+    background-color: var(--primary-color);
+    color: white;
+}
+.my-profile-row-1-col-1-card-button-2:hover{
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color: transparent;
+}
+/* Row-1 Col-1 Card Css End */
+
+
+/* Row-1 Col-2 Card Css Start */
+.my-profile-row-1-col-2-card{
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 557px;
+    height: 450px;
+    background: #FFFFFF;
+    border-radius: 25px;
+}
+.my-profile-row-1-col-2-card-col-1{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    margin-left: 30px;
+}
+.my-profile-row-1-col-2-card-col-2{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    margin-top: 80px;
+}
+.my-profile-row-1-col-2-card-heading{
+    font-size: 24px;
+    font-weight: 500;
+    color: black;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.my-profile-row-1-col-2-card-info-container{
+    margin-bottom: 60px;
+}
+.my-profile-row-1-col-2-card-info-heading{
+    font-weight: 500;
+    font-size: 18px;
+    color: #7d7d7d;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+.my-profile-row-1-col-2-card-info{
+    font-weight: 500;
+    font-size: 18px;
+    color: black;
+}
+/* Row-1 Col-2 Card Css End */
+/* Row-1 Card Css End */
+
+/* Row-2 Card Css Start */
+
+.my-profile-row-2-statistics-container{
+    position: relative;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    margin-top: 60px;
+}
+.my-profile-row-2-quick-actions-container{
+    
+    grid-column-start: 2;
+    grid-column-end: 3;
+    margin-top: 60px;
+    
+}
+.my-profile-row-2-quick-actions-heading{
+    font-weight: 500;
+    font-size: 24px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.my-profile-row-2-quick-actions{
+    width: 451px;
+    height: 212px;
+    border-radius: 25px;
+    background-color: white;
+    margin-top: 30px;
+}
+.my-profile-row-2-quick-actions-item{
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.my-profile-row-2-quick-actions-icon-container{
+    display: flex;
+    align-items: center;
+    margin-left: 33px;
+}
+.my-profile-row-2-quick-actions-txt-container{
+    display: flex;
+    align-items: center;
+    margin-left: 23px;
+}
+.my-profile-row-2-quick-actions-icon-container-2{
+    position: absolute;
+    right: 30px;
+    display: flex;
+    align-items: center;
+}
+.my-profile-row-2-quick-actions-icon{
+    color: #7d7d7d;
+    font-size: 24px;
+}
+.my-profile-row-2-quick-actions-txt{
+    color: #7d7d7d;
+    font-size: 20px;
+    font-weight: 400;
+}
+/* Row-2 Card Css End */
+
