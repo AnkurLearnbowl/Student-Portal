@@ -164,8 +164,14 @@
 .home-section-1-section-1-statistics-card-points-row-2{
     flex: 1;
 }
+.home-section-1-section-1-statistics-card-btn-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .home-section-1-section-1-statistics-card-upgrade-btn{
-    width: 130px;
+    width: 85%;
     height: 40px;
     border: 2px solid var(--primary-color);
     background-color: transparent;
@@ -174,9 +180,10 @@
     color: var(--primary-color);
     cursor: pointer;
     transition: 0.3s;
+    margin-bottom: 5px;
 }
 .home-section-1-section-1-statistics-card-continue-btn{
-    width: 130px;
+    width: 85%;
     height: 40px;
     /* border: 2px solid var(--primary-color); */
     background-color: var(--primary-color);
@@ -185,7 +192,7 @@
     font-size: 14px;
     color: white;
     cursor: pointer;
-    margin-left: 15px;
+    
     transition: 0.3s;
 }
 .home-section-1-section-1-statistics-card-upgrade-btn:hover{

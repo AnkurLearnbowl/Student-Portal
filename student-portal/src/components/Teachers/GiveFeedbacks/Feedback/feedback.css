@@ -1,0 +1,99 @@
+.feedback-container{
+    display: grid;
+    grid-template-columns: 348px auto;
+}
+.feedback-content{
+    margin-left: 20px;
+    margin-top: 20px;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+.feedback-heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 206px;
+    height: 80px;
+    background-color: white;
+    font-size: 28px;
+    font-weight: 500;
+    border-radius: 25px 25px 0px 0px;
+}
+.feedback-content-1-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+    width: 160px;
+    /* flex: 1; */
+    font-weight: 500;
+    font-size: 22px;
+}
+.feedback-item-content-1-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    width: 160px;
+    /* flex: 1; */
+    font-weight: 400;
+    font-size: 22px;
+    text-align: center;
+}
+.feedback-item-content-1-btn{
+    width: 160px;
+    height: 55px;
+    background-color: var(--primary-color);
+    font-size: 24px;
+    border:none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Feedback text box css */
+.feedback-textbox-container{
+    position: relative;
+    width: 90%;
+    margin: auto;
+    height: 325px;
+    background-color: #f4f4f4;
+    border: 1px dashed black;
+}
+.feedback-textbox{
+    width: 99%;
+    height: 230px;
+    background-color: white;
+    color: black;
+    font-size: 22px;
+    font-weight: 400;
+}
+.feedback-textbox::placeholder{
+    font-family: poppins;
+    color: #a4a4a4;
+    font-size: 22px;
+    font-weight: 400;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+.feedback-submit-btn{
+    position: absolute;
+    bottom: 17px;
+    right: 25px;
+    font-family: poppins;
+    font-weight: 400;
+    font-size: 22px;
+    width: 195px;
+    height: 55px;
+    background-color: white;
+    color: #EF9C2B;
+    border: 2px solid #EF9C2B;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.feedback-submit-btn:hover{
+    background-color: #EF9C2B;
+    color: white;
+    font-weight: 500;
+}

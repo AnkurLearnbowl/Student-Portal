@@ -15,21 +15,41 @@ function Sidebar() {
     //console.log(location.pathname + "Ankur")
     if (location.pathname === "/home") {
       setItemClickedNumber(1);
+    } else if (location.pathname === "/myclasses") {
+      setItemClickedNumber(2);
+    } else if (location.pathname === "/materials") {
+      setItemClickedNumber(2);
+    } else if (location.pathname === "/myreport") {
+      setItemClickedNumber(3);
     } else if (location.pathname === "/myprofile") {
       setItemClickedNumber(4);
+    } else if (location.pathname === "/teachers") {
+      setItemClickedNumber(5);
+    } else if (location.pathname === "/documents") {
+      setItemClickedNumber(5);
+    } else if (location.pathname === "/feedback") {
+      setItemClickedNumber(5);
+    } else if (location.pathname === "/markattendence") {
+      setItemClickedNumber(5);
     }
   }, [location.pathname]);
+
   function handleClick(number) {
     if (number === 1) {
       setItemClickedNumber(1);
       history.push("/home");
     } else if (number === 2) {
       setItemClickedNumber(2);
+      history.push("/myclasses");
     } else if (number === 3) {
       setItemClickedNumber(3);
+      history.push("/myreport");
     } else if (number === 4) {
       setItemClickedNumber(4);
       history.push("/myprofile");
+    } else if (number === 5) {
+      setItemClickedNumber(5);
+      history.push("/teachers");
     }
   }
   return (
@@ -50,6 +70,7 @@ function Sidebar() {
         </div>
       </div>
       <div className="sidebar-section-2">
+        {/* Home */}
         <div
           className={
             itemClickedNumber === 1
@@ -69,6 +90,7 @@ function Sidebar() {
           <div className="sidebar-section-2-point-text-container">Home</div>
         </div>
 
+        {/* My Classes */}
         <div
           className={
             itemClickedNumber === 2
@@ -90,6 +112,7 @@ function Sidebar() {
           </div>
         </div>
 
+        {/* My Report */}
         <div
           className={
             itemClickedNumber === 3
@@ -111,6 +134,7 @@ function Sidebar() {
           </div>
         </div>
 
+        {/* My Profile */}
         <div
           className={
             itemClickedNumber === 4
@@ -124,6 +148,23 @@ function Sidebar() {
           </div>
           <div className="sidebar-section-2-point-text-container">
             My Profile
+          </div>
+        </div>
+
+        {/* Teachers */}
+        <div
+          className={
+            itemClickedNumber === 5
+              ? "sidebar-section-2-point-container-active"
+              : "sidebar-section-2-point-container"
+          }
+          onClick={() => handleClick(5)}
+        >
+          <div className="sidebar-section-2-img-container">
+            <AiOutlineHome className="sidebar-section-2-icon" />
+          </div>
+          <div className="sidebar-section-2-point-text-container">
+            Teacher's
           </div>
         </div>
       </div>

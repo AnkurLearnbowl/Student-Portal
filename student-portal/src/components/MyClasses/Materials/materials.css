@@ -1,0 +1,32 @@
+.materials-container{
+    display: grid;
+    grid-template-columns: 348px auto; 
+}
+.materials-content{
+    position: relative;
+    /* display: grid; */
+    /* grid-template-rows: auto 50%; */
+    grid-column-start: 2;
+    grid-column-end: 3;
+    width: 100%;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding-bottom: 90px;
+}
+.materials-content-header-button{
+    width: 390px;
+    height: 90px;
+    font-family: poppins;
+    font-size: 26px;
+    font-weight: 500;
+    color: #000000;
+    cursor: pointer;
+    border: none;
+    background: #FFECD2;
+    box-shadow: 0px 4px 8px rgba(77, 77, 77, 0.1);
+    border-radius: 25px;
+}
+.active{
+    background: #FFFFFF;
+    border-radius: 25px 25px 0px 0px;
+}

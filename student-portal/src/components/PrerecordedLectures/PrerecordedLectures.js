@@ -7,6 +7,7 @@ import {
 } from "react-circular-progressbar";
 import { BsFillBellFill, BsFillPlayFill } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
+import Videos from "../Videos/Videos";
 
 function PrerecordedLectures() {
   const history = useHistory();
@@ -20,15 +21,20 @@ function PrerecordedLectures() {
   const preRecordedVideos = JSON.parse(
     sessionStorage.getItem("preRecordedLectures")
   );
-  //console.log(preRecordedVideos);
-  const preRecordedFrenchVideos = preRecordedVideos[0].French;
-  const preRecordedVedicVideos = preRecordedVideos[1].Vedic;
-  //   console.log(preRecordedFrenchVideos);
+  const courseOpted = sessionStorage.getItem("courseOpted");
+  const preRecordedFrenchVideos = preRecordedVideos[0]?.French;
+  const preRecordedVedicVideos = preRecordedVideos[1]?.Vedic;
   let userName = user?.name;
   let LBRollNumber = user?.lbrollnumber;
   let userEmail = user?.email;
 
-  let videos = [{}, {}, {}, {}, {}, {}];
+  let vidoesToShow = [];
+  // If another course is added please add another if condition
+  if (courseOpted === "French") {
+    vidoesToShow = preRecordedFrenchVideos;
+  } else {
+    vidoesToShow = preRecordedVedicVideos;
+  }
   return (
     <div className="live-class-recordings-container">
       <div className="sidebar">
@@ -69,51 +75,8 @@ function PrerecordedLectures() {
           </div>
         </div>
         <div className="live-class-recordings-videos-container">
-          {videos.map((item) => {
-            return (
-              <a href="/" target="_blank">
-                <div className="live-class-recordings-video">
-                  <div className="home-section-1-section-2-video-icon-container">
-                    <CircularProgressbarWithChildren
-                      value={23}
-                      styles={buildStyles({
-                        textColor: "white",
-                        pathColor: "white",
-                        textSize: "200px",
-                      })}
-                    >
-                      {
-                        <BsFillPlayFill
-                          style={{
-                            color: "var(--primary-color)",
-                            width: 25,
-                            height: 25,
-                            backgroundColor: "white",
-                            borderRadius: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        />
-                      }
-                    </CircularProgressbarWithChildren>
-                  </div>
-                  <div className="home-section-1-section-2-video-heading">
-                    <p className="home-section-1-section-2-video-sub-heading">
-                      French-Lesson-31
-                    </p>
-                    <p className="home-section-1-section-2-video-sub-sub-heading">
-                      35 mins left
-                    </p>
-                  </div>
-                  <img
-                    src="/images/videoTestThumbnail.png"
-                    alt="thumbail"
-                    className="home-section-1-section-2-video-thumbnail"
-                  ></img>
-                </div>
-              </a>
-            );
+          {vidoesToShow.map((item) => {
+            return <Videos url={item?.videoUrl} id={item?.videoId} />;
           })}
         </div>
       </div>

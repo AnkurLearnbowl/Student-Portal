@@ -10,6 +10,7 @@ import { ImLocation } from "react-icons/im";
 import { BiBookReader } from "react-icons/bi";
 import { FiBookOpen } from "react-icons/fi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { BsFillPersonFill } from "react-icons/bs";
 import { IoCall } from "react-icons/io5";
 import { GrMail } from "react-icons/gr";
 import { AiOutlineLock } from "react-icons/ai";
@@ -21,41 +22,27 @@ function MyProfile() {
   const videosCardRef = useRef(null);
   const studyCardRef = useRef(null);
   const [state, dispatch] = useStateValue();
-  const authToken = state?.authToken;
-  const isUserLoggedIn = state?.isUserLoggedIn;
-  const isUserRegistered = state?.isUserRegistered;
-  const userName = state.user?.name;
-  const userEmail = state.user?.email;
-  const userContactNumber = state.user?.contactNumber;
-  const userId = state.user?.id;
-  const userLBRollNumber = state.user?.lbrollnumber;
-  const userStandard = state.user?.standard;
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const authToken = sessionStorage.getItem("auth_token");
+  const userName = user?.name;
+  const userEmail = user?.email;
+  const userContactNumber = user?.contactNumber;
+  const userLBRollNumber = user?.lbrollnumber;
+  const userStandard = user?.standard;
+  const userImageUrl = user?.imageUrl;
   const temp = userName?.split(" ");
   const firstName = temp?.[0];
   const lastName = temp?.[1];
+  //console.log(userImageUrl);
   useEffect(() => {
     //If there is no value in state take it from sessionstorage
-    if (state.user === null || state.user === undefined) {
+    if (user === null || user === undefined) {
       let user = JSON.parse(sessionStorage.getItem("user"));
-      let authToken = sessionStorage.getItem("auth_token");
-      let batch = sessionStorage.getItem("batch");
       //If there is no value in sessionstorage then redirect to login
       if (user === null || user === undefined) {
         history.push("/login");
       }
       //Setting the value in state
-      dispatch({
-        type: "SET_USER",
-        isUserLoggedIn: true,
-        user: user,
-        batch: batch,
-        isUserRegistered: true,
-        authToken: authToken,
-      });
-      state.user = user;
-      state.batch = batch;
-      state.authToken = authToken;
-      state.isUserLoggedIn = true;
     }
   }, []);
   function handleRightStatisticsClick() {
@@ -65,8 +52,12 @@ function MyProfile() {
   function handleLeftStatisticsClick() {
     statisticsCardRef.current.scrollLeft -= 451;
   }
-  function onClickChangeMobileNumber() {}
-  function onClickChangeEmailId() {}
+  function onClickChangeMobileNumber() {
+    history.push("/changenumber");
+  }
+  function onClickChangeEmailId() {
+    history.push("/changeemail");
+  }
   function onClickChangePassword() {
     history.push("/changepassword");
   }
@@ -80,11 +71,15 @@ function MyProfile() {
           <div className="my-profile-row-1-col-1">
             <div className="my-profile-row-1-col-1-card">
               <div className="my-profile-row-1-col-1-card-avatar-container">
-                <img
-                  src="/images/test-avatar.jpg"
-                  alt="avatar"
-                  className="my-profile-row-1-col-1-card-avatar"
-                ></img>
+                {userImageUrl == null ? (
+                  <BsFillPersonFill fontSize={"130px"} />
+                ) : (
+                  <img
+                    src="/images/test-avatar.jpg"
+                    alt="avatar"
+                    className="my-profile-row-1-col-1-card-avatar"
+                  ></img>
+                )}
               </div>
               <div className="my-profile-row-1-col-1-card-student-info-container">
                 <h5 className="my-profile-row-1-col-1-card-student-name">
@@ -108,9 +103,37 @@ function MyProfile() {
                 <button className="my-profile-row-1-col-1-card-button-1">
                   Change Avatar
                 </button>
-                <button className="my-profile-row-1-col-1-card-button-2">
+                {/* <button className="my-profile-row-1-col-1-card-button-2">
                   Upload Photo
-                </button>
+                  <input
+                    type="file"
+                    className="my-profile-row-1-col-1-card-button-2"
+                    style={{
+                      opacity: "1",
+                      position: "absolute",
+                      top: "0px",
+                      width: "230px",
+                    }}
+                  ></input>
+                </button> */}
+                <div className="file-input-box my-profile-row-1-col-1-card-button-2">
+                  <input
+                    type="file"
+                    style={{ opacity: "0" }}
+                    className="file-input"
+                    id="photo-id"
+                    accept="image/png, image/gif, image/jpeg"
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                    }}
+                  ></input>
+                  <label
+                    for="photo-id"
+                    className="my-profile-row-1-col-1-card-button-2-label"
+                  >
+                    Upload Photo
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -309,7 +332,7 @@ function MyProfile() {
                   <IoIosArrowForward className="my-profile-row-2-quick-actions-icon"></IoIosArrowForward>
                 </div>
               </div>
-              <div
+              {/* <div
                 className="my-profile-row-2-quick-actions-item"
                 onClick={() => onClickChangeEmailId()}
               >
@@ -324,7 +347,7 @@ function MyProfile() {
                 <div className="my-profile-row-2-quick-actions-icon-container-2">
                   <IoIosArrowForward className="my-profile-row-2-quick-actions-icon"></IoIosArrowForward>
                 </div>
-              </div>
+              </div> */}
               <div
                 className="my-profile-row-2-quick-actions-item"
                 onClick={() => onClickChangePassword()}

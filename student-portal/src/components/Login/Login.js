@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import LoginSignUpAnimation from "../LoginSignUpAnimation/LoginSignUpAnimation";
 import "./login.css";
 import { AiFillEye } from "react-icons/ai";
@@ -22,9 +22,13 @@ function Login() {
   const [contactNumber, setContactNumber] = useState("");
   const [isContactNumberValild, setContactNumberValid] = useState(false);
   const [password, setPassword] = useState("");
+  const [isLoginBtnEnabled, setLoginBtnEnabled] = useState(true);
   const contactInputRef = useRef();
   const passwordInputRef = useRef();
 
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
   //Defining the notification
   const passwordInfo = () => {
     toast.info("Password must be of length 6", {
@@ -94,7 +98,7 @@ function Login() {
     if (isPasswordValid && isContactNumberValild) {
       let hashedPassword = encrypt(password, "$5$rounds=10000$hrwashere");
       hashedPassword = hashedPassword.substring(26, hashedPassword.length);
-      //console.log(hashedPassword);
+      setLoginBtnEnabled(false);
       Axios.post(
         "/v1/auth_user",
         {
@@ -162,14 +166,15 @@ function Login() {
           }
         })
         .catch((err) => {
-          console.log(err.response);
-          let statusCode = err.response.data.statuscode;
+          console.log(err);
+          let statusCode = err?.response?.data?.statuscode;
           if (statusCode === "SC403") {
           }
           if (statusCode === "SC404") {
             //Invalid Username or password
             wrongPassword();
           }
+          setLoginBtnEnabled(true);
         });
     } else {
       if (!isPasswordValid) {
@@ -246,6 +251,7 @@ function Login() {
               <button
                 className="sign-up-btn"
                 onClick={(e) => handleFormSubmit(e)}
+                disabled={isLoginBtnEnabled ? false : true}
               >
                 Log - In
               </button>

@@ -1,0 +1,8 @@
+.teachers-documents-container{
+    display: grid;
+    grid-template-columns: 348px auto;
+}
+.teachers-documents{
+    grid-column-start: 2;
+    grid-column-end: 3;
+}

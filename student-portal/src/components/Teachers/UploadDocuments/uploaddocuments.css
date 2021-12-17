@@ -1,0 +1,46 @@
+.upload-documents-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    height: 80px;
+    background-color: white;
+    border: 1px solid #adadad;
+}
+.center-horizontally-and-vertically{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.upload-documents-container-item-item-1{
+    width: 200px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    font-weight: 400;
+    font-size: 22px;
+}
+.upload-documents-container-item-item-2{
+    width: 200px;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    font-weight: 400;
+    font-size: 22px;
+}
+.upload-documents-container-item-item-3{
+    width: 200px;
+    position: relative;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    font-weight: 400;
+    font-size: 22px;
+}
+.teachers-btn{
+    position: absolute;
+    font-family: poppins;
+    width: 135px;
+    height: 49px;
+    border: none;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+}
